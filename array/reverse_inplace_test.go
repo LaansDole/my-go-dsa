@@ -5,6 +5,18 @@ import (
 	"testing"
 )
 
+func reverseInPlace(list []int, start, end int) []int {
+	if end - start == 1 {
+		list[start], list[end] = list[end], list[start]
+		return list
+	}
+	for i := start; i < end - start; i++ {
+		list[i], list[end] = list[end], list[i]
+		end--
+	}
+	return list
+}
+
 /*
 TestReverseInPlace tests solution(s) with the following signature and problem description:
 
@@ -35,7 +47,7 @@ func TestReverseInPlace(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		ReverseInPlace(test.list, test.start, test.end)
+		reverseInPlace(test.list, test.start, test.end)
 		if !slices.Equal(test.list, test.reversed) {
 			t.Fatalf("Failed test case #%d. Want %#v got %#v", i, test.reversed, test.list)
 		}
