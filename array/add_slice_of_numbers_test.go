@@ -2,8 +2,29 @@ package array
 
 import (
 	"slices"
+	"strconv"
 	"testing"
 )
+
+func addSliceOfTwoNumbers(slice1, slice2 []int) (resultSlice []int) {
+    convSliceToInt := func(slice []int) int {
+        var numStr string
+        for _, num := range slice {
+            numStr += strconv.Itoa(num)
+        }
+        
+        result, _ := strconv.Atoi(numStr)
+        return result
+    }
+	result := convSliceToInt(slice1) + convSliceToInt(slice2)
+
+    for _, digit := range strconv.Itoa(result) {
+        digitInt, _ := strconv.Atoi(string(digit))
+        resultSlice = append(resultSlice, digitInt)
+    }
+    
+    return resultSlice
+}
 
 /*
 TestAddSliceOfTwoNumbers tests solution(s) with the following signature and problem description:
@@ -29,7 +50,7 @@ func TestAddSliceOfTwoNumbers(t *testing.T) {
 		{[]int{9, 9, 9}, []int{9, 9, 9}, []int{1, 9, 9, 8}},
 	}
 	for i, test := range tests {
-		if got := AddSliceOfTwoNumbers(test.num1, test.num2); !slices.Equal(got, test.sum) {
+		if got := addSliceOfTwoNumbers(test.num1, test.num2); !slices.Equal(got, test.sum) {
 			t.Fatalf("Failed test case #%d. Want %v got %v", i, test.sum, got)
 		}
 	}
